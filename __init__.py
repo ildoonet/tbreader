@@ -1,1 +1,1 @@
-from TBReader.reader import get_tags
+from .TBReader import *

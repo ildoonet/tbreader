@@ -43,7 +43,7 @@ if not eventAccumulatorImported:
 summariesDefault = ['scalars', 'histograms', 'images', 'audio', 'compressedHistograms']
 
 
-def get_tags(path):
+def get_lognames(path):
     paths = os.walk(path)
 
     tags = []
@@ -72,8 +72,8 @@ def parse_tags(path, logname, tag):
         scalars.extend(l)
 
     # sort is guaranteed to be stable
-    scalars = scalars.sort(key=lambda x: x[0])
-    scalars = scalars.sort(key=lambda x: x[1])
+    scalars.sort(key=lambda x: x[0])
+    scalars.sort(key=lambda x: x[1])
 
     return scalars
 
@@ -88,8 +88,7 @@ def parse_tag_by_filename(path, logname, tag, filename):
                                                 # event_accumulator.HISTOGRAMS: 0,
                                             })
     ea.Reload()
-    return ea.Scalars(tag)
-
-
-
-# parse_tags('/data/private/darts/cnn/logs', 'cifar10/darts_original', 'acc/valid')
+    try:
+        return ea.Scalars(tag)
+    except:
+        return []
